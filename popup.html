@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 340px;
+      font-family: -apple-system, sans-serif;
+      padding: 0;
+      background: #14151b;
+      color: #f1ede4;
+      margin: 0;
+    }
+
+    .wrap {
+      padding: 18px;
+    }
+
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    h2 .b {
+      color: #6e9bff;
+    }
+
+    .gear {
+      cursor: pointer;
+      font-size: 16px;
+      opacity: .7;
+    }
+
+    .gear:hover {
+      opacity: 1;
+    }
+
+    .label {
+      font-size: 11px;
+      color: #8a8f9c;
+      margin: 16px 0 7px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .goals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .goal-btn {
+      padding: 10px;
+      border: 1px solid #2a2c36;
+      border-radius: 10px;
+      background: #1c1e27;
+      color: #f1ede4;
+      font-size: 13px;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .goal-btn:hover {
+      border-color: #6e9bff;
+    }
+
+    .goal-btn.active {
+      background: #6e9bff;
+      color: #0c1018;
+      border-color: #6e9bff;
+      font-weight: 600;
+    }
+
+    textarea {
+      width: 100%;
+      margin-top: 4px;
+      background: #0f1016;
+      color: #f1ede4;
+      border: 1px solid #2a2c36;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      resize: vertical;
+      min-height: 46px;
+      font-family: inherit;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    select {
+      background: #0f1016;
+      color: #f1ede4;
+      border: 1px solid #2a2c36;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13px;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #6e9bff;
+      color: #0c1018;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .15s;
+    }
+
+    .btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn.ghost {
+      background: #1c1e27;
+      color: #f1ede4;
+      border: 1px solid #2a2c36;
+      font-weight: 600;
+    }
+
+    #gate {
+      text-align: center;
+      padding: 28px 0;
+    }
+
+    #main {
+      filter: blur(7px);
+      pointer-events: none;
+      opacity: .4;
+      transition: .25s;
+    }
+
+    #main.on {
+      filter: none;
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .sugg {
+      background: #1c1e27;
+      border: 1px solid #2a2c36;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 9px;
+      font-size: 14px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: .15s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sugg:hover {
+      border-color: #6e9bff;
+      background: #20232e;
+    }
+
+    .sugg .ins {
+      font-size: 10px;
+      color: #6e9bff;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #8a8f9c;
+      margin-top: 12px;
+    }
+
+    #output {
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h2>🐦 Wing<span class="b">man</span></h2>
+      <span class="gear" id="gear">⚙️</span>
+    </div>
+
+    <div id="gate">
+      <p style="font-size:13px;color:#8a8f9c;">Open the chat you want help with, then hit start.</p>
+      <button class="btn" id="start">▶ Start</button>
+    </div>
+
+    <div id="main">
+      <div class="label">Pick a vibe</div>
+      <div class="goals">
+        <button class="goal-btn active" data-goal="casual">🤝 Casual</button>
+        <button class="goal-btn" data-goal="flirt">💘 Flirt</button>
+        <button class="goal-btn" data-goal="formal">💼 Formal</button>
+        <button class="goal-btn" data-goal="revive">🆘 Revive</button>
+      </div>
+      <div class="label">Your goal (optional)</div>
+      <textarea id="intent" placeholder="e.g. she's in my bio class, want to ask about the assignment..."></textarea>
+      <div class="row">
+        <span style="font-size:13px;color:#8a8f9c;">Options:</span>
+        <select id="count">
+          <option>1</option>
+          <option>2</option>
+          <option selected>3</option>
+        </select>
+      </div>
+      <button class="btn" id="suggest">✨ Suggest replies</button>
+      <button class="btn ghost" id="more" style="display:none;">🔄 Different ones</button>
+      <div id="output"></div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Wingman",
+  "version": "2.1",
+  "description": "Your AI texting wingman — reads the chat and suggests replies.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://api.groq.com/*",
+    "https://www.instagram.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "logo.png"
+      ],
+      "matches": [
+        "https://www.instagram.com/*"
+      ]
+    }
+  ],
+  "options_page": "options.html"
+}
