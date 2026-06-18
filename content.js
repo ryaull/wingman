@@ -862,6 +862,7 @@ function injectUI() {
       fab.style.left = (e.clientX - fx) + "px";
       fab.style.top = (e.clientY - fy) + "px";
     });
+    // In the FAB drag section, the click handler should be:
     document.addEventListener("mouseup", () => {
       if (fdrag && fab) {
         fdrag = false;
@@ -869,7 +870,7 @@ function injectUI() {
         const r = fab.getBoundingClientRect();
         chrome.storage.local.set({ wmFab: { x: r.left, y: r.top } });
         if (!moved && panel) {
-          panel.classList.toggle("open");
+          panel.classList.toggle("open");  // This toggles it back open
           positionPanel();
         }
       }
@@ -877,7 +878,13 @@ function injectUI() {
   }
 
   // ===== Close =====
-  if (closeBtn) closeBtn.onclick = () => panel.classList.remove("open");
+  // ===== Close button - just close panel, keep FAB visible =====
+  if (closeBtn) {
+    closeBtn.onclick = (e) => {
+      e.stopPropagation();
+      panel.classList.remove("open");
+    };
+  }
 
   // ===== Panel drag =====
   if (header && panel) {
