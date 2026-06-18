@@ -99,9 +99,9 @@ function injectUI() {
     .wm-keylink { display: inline-block; margin-top: 8px; color: #7b9bff; font-weight: 600; text-decoration: none; }
     #wm-keybox { width: 100%; margin-top: 10px; background: rgba(255,255,255,.03); color: #ECEAE4; border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 9px; font-size: 12px; outline: none; }
     .wm-spin { display:inline-block; width:13px; height:13px; border:2px solid rgba(255,255,255,.2); border-top-color:#7b9bff; border-radius:50%; animation: wmspin .7s linear infinite; vertical-align: middle; margin-right: 7px; }
-    @keyframes wmspin { to { transform: rotate(360deg);
+    @keyframes wmspin { to { transform: rotate(360deg); } }
     .wm-shortcut { margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.07); font-size: 11px; color: #6b707e; text-align: center; }
-    .wm-shortcut kbd { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 5px; padding: 1px 6px; font-family: monospace; font-size: 11px; color: #c9ccd4; } } }
+    .wm-shortcut kbd { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 5px; padding: 1px 6px; font-family: monospace; font-size: 11px; color: #c9ccd4; }
   `;
   document.head.appendChild(style);
 
