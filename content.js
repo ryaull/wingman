@@ -106,7 +106,7 @@ Give exactly ${countVal} reply option(s) in natural texting style. Use an emoji 
         "Authorization": "Bearer " + groqKey
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.9
       })
@@ -273,11 +273,11 @@ function injectUI() {
       animation: none;
     }
     #wm-fab.peek {
-      transform: translateX(60px) scale(0.8);
-      opacity: 0.3;
+      transform: scale(0.92);
+      opacity: 0.65;
     }
     #wm-fab.peek:hover {
-      transform: translateX(0) scale(1.08);
+      transform: scale(1.08);
       opacity: 1;
     }
     #wm-fab.hidden { display: none !important; }
@@ -878,11 +878,24 @@ function injectUI() {
   }
 
   // ===== Close =====
-  // ===== Close button - just close panel, keep FAB visible =====
+  // ===== Close button - close panel AND guarantee FAB stays visible =====
   if (closeBtn) {
     closeBtn.onclick = (e) => {
       e.stopPropagation();
       panel.classList.remove("open");
+      // guarantee the floating button is visible and on-screen
+      if (fab) {
+        fab.classList.remove("hidden");
+        fab.classList.remove("peek");
+        const r = fab.getBoundingClientRect();
+        // if the button ended up off-screen or unset, snap it back to bottom-right
+        if (r.left < 0 || r.top < 0 || r.left > window.innerWidth - 30 || r.top > window.innerHeight - 30) {
+          fab.style.left = "auto";
+          fab.style.top = "auto";
+          fab.style.right = "28px";
+          fab.style.bottom = "28px";
+        }
+      }
     };
   }
 
